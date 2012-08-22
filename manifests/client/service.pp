@@ -1,12 +1,4 @@
-class samba::server::service {
-  
-  service { "smbd":
-    ensure => running,
-    hasstatus => true,
-    hasrestart => true,
-    enable => true,
-    require => Class["samba::client::install"]
-  }
+class samba::client::service {
    
   service { "nmbd":
     ensure => running,
