@@ -1,4 +1,5 @@
-class samba::server($workgroup = '') {
+class samba::server($workgroup,
+                    $security) {
 	include samba::server::install
 	include samba::server::config
 	include samba::server::service
@@ -17,6 +18,15 @@ class samba::server($workgroup = '') {
     changes => $workgroup ? {
       default => "set ${target}/workgroup $workgroup",
       '' => "rm ${target}/workgroup",
+    },
+    require => Augeas['global-section'],
+  }
+
+  augeas { 'global-security':
+    context => $context,
+    changes => $security ? {
+      default => "set ${target}/workgroup $security",
+      '' => "rm ${target}/security",
     },
     require => Augeas['global-section'],
   }
